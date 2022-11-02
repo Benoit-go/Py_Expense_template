@@ -25,13 +25,11 @@ def store_expenses(infos):
     if not infos["amount"].isnumeric():
         print("Error : The amount should be a number")
         return False
-    with open('expense_report.csv', 'a') as file:
-        writer = csv.writer(file, delimiter=',')
-        writer.writerows(
-            [[infos["amount"]], [infos["label"]], [infos["spender"]]])
-        # writer.writerow(infos["amount"])
-        # writer.writerow(infos["label"])
-        # writer.writerow(infos["spender"])
+#   with open('user.csv', 'a')
+    with open('expense_report.csv', 'a', newline='') as file:
+        fieldnames = ['amount', 'label', 'spender']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writerow(infos)
     return True
 
 
