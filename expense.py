@@ -1,30 +1,40 @@
 from PyInquirer import prompt
+import csv
 
 expense_questions = [
     {
-        "type":"input",
-        "name":"amount",
-        "message":"New Expense - Amount: ",
+        "type": "input",
+        "name": "amount",
+        "message": "New Expense - Amount: ",
     },
     {
-        "type":"input",
-        "name":"label",
-        "message":"New Expense - Label: ",
+        "type": "input",
+        "name": "label",
+        "message": "New Expense - Label: ",
     },
     {
-        "type":"input",
-        "name":"spender",
-        "message":"New Expense - Spender: ",
+        "type": "input",
+        "name": "spender",
+        "message": "New Expense - Spender: ",
     },
 
 ]
 
 
-
-def new_expense(*args):
-    infos = prompt(expense_questions)
-    # Writing the informations on external file might be a good idea ¯\_(ツ)_/¯
-    print("Expense Added !")
+def store_expenses(infos):
+    if not infos["amount"].isnumeric():
+        print("Error : The amount should be a number")
+        return False
+    with open('expense_report.csv', 'a') as file:
+        writer = csv.writer(file)
+        writer.writerow(infos["amount"])
+        writer.writerow(infos["label"])
+        writer.writerow(infos["spender"])
     return True
 
 
+def new_expense(*args):
+    infos = prompt(expense_questions)
+    if store_expenses(infos):
+        print("Expense Added !")
+    return True
