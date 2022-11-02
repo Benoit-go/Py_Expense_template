@@ -26,10 +26,12 @@ def store_expenses(infos):
         print("Error : The amount should be a number")
         return False
     with open('expense_report.csv', 'a') as file:
-        writer = csv.writer(file)
-        writer.writerow(infos["amount"])
-        writer.writerow(infos["label"])
-        writer.writerow(infos["spender"])
+        writer = csv.writer(file, delimiter=',')
+        writer.writerows(
+            [[infos["amount"]], [infos["label"]], [infos["spender"]]])
+        # writer.writerow(infos["amount"])
+        # writer.writerow(infos["label"])
+        # writer.writerow(infos["spender"])
     return True
 
 
