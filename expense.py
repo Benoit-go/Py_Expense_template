@@ -1,4 +1,4 @@
-from PyInquirer import prompt
+from PyInquirer import prompt, Separator
 import csv
 
 expense_questions = [
@@ -25,7 +25,10 @@ def store_expenses(infos):
     if not infos["amount"].isnumeric():
         print("Error : The amount should be a number")
         return False
-#   with open('user.csv', 'a')
+    with open('users.csv', 'r') as file:
+        reader = csv.reader(file)
+        for index, rows in enumerate(reader):
+            print(str(index) + " " + "".join(rows))
     with open('expense_report.csv', 'a', newline='') as file:
         fieldnames = ['amount', 'label', 'spender']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
